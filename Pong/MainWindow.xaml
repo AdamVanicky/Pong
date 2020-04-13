@@ -55,7 +55,11 @@
         </RichTextBox>
         <Button x:Name="butSetup" Click="butSetup_Click" Content="Setup" HorizontalAlignment="Left" Margin="139,12,0,0" VerticalAlignment="Top" Width="96" Height="34"/>
         <Button x:Name="butStart" Click="butStart_Click" Content="Start" HorizontalAlignment="Left" Margin="275,12,0,0" VerticalAlignment="Top" Width="98" Height="34"/>
-        <ComboBox x:Name="cbDifficulty" HorizontalAlignment="Left" Margin="421,12,0,0" VerticalAlignment="Top" Width="130" Height="34"/>
+        <ComboBox x:Name="cbDifficulty" HorizontalAlignment="Left" Margin="421,12,0,0" VerticalAlignment="Top" Width="130" Height="34">
+            <ComboBoxItem Content="Lehká"/>
+            <ComboBoxItem Content="Střední"/>
+            <ComboBoxItem Content="Těžká"/>
+        </ComboBox>
 
     </Grid>
 </Window>

@@ -44,6 +44,7 @@ namespace Pong
             Canvas.SetLeft(recRacketAI, 580);
         }
         public int Score;
+        
         public double X=20, Y=-20;
         public double LastX, LastY;
         public void GameTick(Panel panGame, Rectangle recBall, Rectangle recRacketPlayer, Rectangle recRacketAI, DispatcherTimer timer, Line linMid,TextBlock tbScore)
@@ -58,10 +59,6 @@ namespace Pong
                 Y *= -1;
                 
             }
-            if(Canvas.GetLeft(recBall) <= 0 || Canvas.GetLeft(recBall) >= panGame.Width - 20)
-            {
-                X *= -1;
-            }
             if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall)  >= Canvas.GetTop(recRacketPlayer) - 20 && Canvas.GetTop(recBall) <= Canvas.GetTop(recRacketPlayer) + 60) X *= -1;
             
             if (Canvas.GetLeft(recBall) + 20 == Canvas.GetLeft(recRacketAI) && Canvas.GetTop(recBall) >= Canvas.GetTop(recRacketAI) - 20 && Canvas.GetTop(recBall) <= Canvas.GetTop(recRacketAI) + 60) X *= -1;
@@ -72,7 +69,8 @@ namespace Pong
             
             Canvas.SetTop(recBall, LastY + Y);
             Canvas.SetLeft(recBall, LastX + X);
-            Canvas.SetTop(recRacketAI, 100);
+            
+            Canvas.SetTop(recRacketAI, LastY-20);
         }
     }
 }
