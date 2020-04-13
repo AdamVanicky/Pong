@@ -37,7 +37,19 @@ namespace Pong
             Score=0;
             tbScore.Text = "00";
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(250);
+            switch(cbDifficulty.Text)
+            {
+                case "Lehká":
+                    timer.Interval = TimeSpan.FromMilliseconds(300);
+                    break;
+                case "Střední":
+                    timer.Interval = TimeSpan.FromMilliseconds(250);
+                    break;
+                case "Těžká":
+                    timer.Interval = TimeSpan.FromMilliseconds(125);
+                    break;
+            }
+            
             timer.Tick += timer_Tick;
             timer.Start();
         }
