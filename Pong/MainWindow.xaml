@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pong"
         mc:Ignorable="d"
-        Title="MainWindow" Height="495" Width="750" MinWidth="750" MinHeight="495" MaxHeight="495" MaxWidth="750" KeyUp="Hra_Pong___Vanický_KeyUp" Closing="Hra_Pong___Vanický_Closing">
+        Title="MainWindow" Height="495" Width="750" MinWidth="750" MinHeight="495" MaxHeight="495" MaxWidth="750" KeyUp="Hra_Pong___Vanický_KeyUp" Closing="Hra_Pong___Vanický_Closing" Loaded="Hra_Pong___Vanický_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="548*"/>

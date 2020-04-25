@@ -20,7 +20,7 @@ namespace Pong
     public partial class MainWindow : Window
     {
         DispatcherTimer timer = new DispatcherTimer();
-        public List<int> TopScores = new List<int> {0,0,0,0,0,0,0,0,0,0 };
+        public List<string> TopScores = new List<string> {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
         public MainWindow()
         {
             InitializeComponent();
@@ -65,16 +65,46 @@ namespace Pong
         
         void timer_Tick(object sender, EventArgs e)
         {
+            
+            SetLeaderboard(TopScores.ToArray());
             gn.GameTick(panGame, recBall, recRacketPlayer, recRacketAI,timer,linMid,tbScore);
         }
 
         private void Hra_Pong___Vanický_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            FileStream fs = new FileStream("Scores.txt", FileMode.OpenOrCreate);
+            FileStream fs = new FileStream("Scores.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
-            sw.Write($"{TopScores[0]}*{TopScores[1]}*{TopScores[2]}*{TopScores[3]}*{TopScores[4]}*{TopScores[5]}*{TopScores[6]}*{TopScores[7]}*{TopScores[8]}*{TopScores[9]}*");
+            sw.Write($"{TopScores[0]}*{TopScores[1]}*{TopScores[2]}*{TopScores[3]}*{TopScores[4]}*{TopScores[5]}*{TopScores[6]}*{TopScores[7]}*{TopScores[8]}*{TopScores[9]}");
             sw.Close();
             fs.Close();
+        }
+
+        private void Hra_Pong___Vanický_Loaded(object sender, RoutedEventArgs e)
+        {
+            FileStream fs = new FileStream("Scores.txt", FileMode.Open);
+            StreamReader sr = new StreamReader(fs);
+            string s = sr.ReadToEnd();
+            string[] Pole = s.Split('*');
+            SetLeaderboard(Pole);
+            sr.Close();
+            fs.Close();
+        }
+
+        public void SetLeaderboard(string[] Pole)
+        {
+            rtbLeaderboard.Document.Blocks.Clear();
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run("Žebříček nejlepších")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run("===============")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"1. {Pole[0]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"2. {Pole[1]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"3. {Pole[2]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"4. {Pole[3]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"5. {Pole[4]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"6. {Pole[5]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"7. {Pole[6]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"8. {Pole[7]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"9. {Pole[8]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"10. {Pole[9]}")));
         }
     }
 }
