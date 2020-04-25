@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Pong
     public partial class MainWindow : Window
     {
         DispatcherTimer timer = new DispatcherTimer();
-        
+        public List<int> TopScores = new List<int> {0,0,0,0,0,0,0,0,0,0 };
         public MainWindow()
         {
             InitializeComponent();
@@ -65,6 +66,15 @@ namespace Pong
         void timer_Tick(object sender, EventArgs e)
         {
             gn.GameTick(panGame, recBall, recRacketPlayer, recRacketAI,timer,linMid,tbScore);
+        }
+
+        private void Hra_Pong___Vanický_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            FileStream fs = new FileStream("Scores.txt", FileMode.OpenOrCreate);
+            StreamWriter sw = new StreamWriter(fs);
+            sw.Write($"{TopScores[0]}*{TopScores[1]}*{TopScores[2]}*{TopScores[3]}*{TopScores[4]}*{TopScores[5]}*{TopScores[6]}*{TopScores[7]}*{TopScores[8]}*{TopScores[9]}*");
+            sw.Close();
+            fs.Close();
         }
     }
 }

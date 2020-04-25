@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -47,6 +48,8 @@ namespace Pong
         
         public double X=20, Y=-20;
         public double LastX, LastY;
+
+        
         public void GameTick(Panel panGame, Rectangle recBall, Rectangle recRacketPlayer, Rectangle recRacketAI, DispatcherTimer timer, Line linMid,TextBlock tbScore)
         {
             
@@ -102,8 +105,9 @@ namespace Pong
             Canvas.SetTop(recBall, LastY + Y);
             Canvas.SetLeft(recBall, LastX + X);
             
-            Canvas.SetTop(recRacketAI, LastY-20);
+            Canvas.SetTop(recRacketAI, LastY);
 
+            
         }
     }
 }

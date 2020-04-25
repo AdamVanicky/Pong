@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pong"
         mc:Ignorable="d"
-        Title="MainWindow" Height="495" Width="750" MinWidth="750" MinHeight="495" MaxHeight="495" MaxWidth="750"  KeyUp="Hra_Pong___Vanický_KeyUp">
+        Title="MainWindow" Height="495" Width="750" MinWidth="750" MinHeight="495" MaxHeight="495" MaxWidth="750" KeyUp="Hra_Pong___Vanický_KeyUp" Closing="Hra_Pong___Vanický_Closing">
     <Grid>
-        <Canvas x:Name="panGame"  HorizontalAlignment="Left" Height="380" Margin="0,85,0,0" VerticalAlignment="Top" Width="600" Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="548*"/>
+            <ColumnDefinition Width="195*"/>
+        </Grid.ColumnDefinitions>
+        <Canvas x:Name="panGame"  HorizontalAlignment="Left" Height="380" Margin="0,85,0,0" VerticalAlignment="Top" Width="600" Background="Black" Grid.ColumnSpan="2">
             <Rectangle
                 x:Name="recBall"
                  Fill="Red"
@@ -46,7 +50,7 @@
             <TextBlock Foreground="White" Text="00" FontSize="60"
                        Canvas.Left="230" x:Name="tbScore" Canvas.Top="0"/>
         </Canvas>
-        <RichTextBox x:Name="rtbLeaderboard" HorizontalAlignment="Left" Height="465" Margin="600,0,0,0" VerticalAlignment="Top" Width="143">
+        <RichTextBox x:Name="rtbLeaderboard" HorizontalAlignment="Left" Height="465" Margin="52,0,0,0" VerticalAlignment="Top" Width="143" Grid.Column="1">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="RichTextBox"/>
@@ -55,7 +59,7 @@
         </RichTextBox>
         <Button x:Name="butSetup" Click="butSetup_Click" Content="Setup" HorizontalAlignment="Left" Margin="139,12,0,0" VerticalAlignment="Top" Width="96" Height="34"/>
         <Button x:Name="butStart" Click="butStart_Click" Content="Start" HorizontalAlignment="Left" Margin="275,12,0,0" VerticalAlignment="Top" Width="98" Height="34"/>
-        <ComboBox x:Name="cbDifficulty" HorizontalAlignment="Left" Margin="421,12,0,0" VerticalAlignment="Top" Width="130" Height="34">
+        <ComboBox x:Name="cbDifficulty" HorizontalAlignment="Left" Margin="421,12,0,0" VerticalAlignment="Top" Width="130" Height="34" Grid.ColumnSpan="2">
             <ComboBoxItem Content="Lehká"/>
             <ComboBoxItem Content="Střední"/>
             <ComboBoxItem Content="Těžká"/>
