@@ -65,7 +65,8 @@ namespace Pong
             if (Canvas.GetLeft(recBall) == panGame.Width - 20) { LastX = 300; LastY = 200; tbScore.Text = Convert.ToString(++Score); }
 
             if (Canvas.GetLeft(recBall) == 0) { LastX = 300 - X; LastY = 200 - Y; timer.Stop(); MessageBox.Show("Konec hry"); Start = true;
-                liTopScores[9] = Score;
+                int i = liTopScores.Count - 1;
+                liTopScores[i] = Score;
                 liTopScores.Sort();
                 liTopScores.Reverse();
             } //vrátit se sem při řešení tabulky leaderboard

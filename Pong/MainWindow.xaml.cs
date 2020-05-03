@@ -113,16 +113,16 @@ namespace Pong
             rtbLeaderboard.Document.Blocks.Clear();
             rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run("Žebříček nejlepších")));
             rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run("===============")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"1. {Pole[0]}")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"2. {Pole[1]}")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"3. {Pole[2]}")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"4. {Pole[3]}")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"5. {Pole[4]}")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"6. {Pole[5]}")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"7. {Pole[6]}")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"8. {Pole[7]}")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"9. {Pole[8]}")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"10. {Pole[9]}")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"1. {Pole[0]} b.")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"2. {Pole[1]} b.")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"3. {Pole[2]} b.")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"4. {Pole[3]} b.")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"5. {Pole[4]} b.")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"6. {Pole[5]} b.")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"7. {Pole[6]} b.")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"8. {Pole[7]} b.")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"9. {Pole[8]} b.")));
+            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"10. {Pole[9]} b.")));
         }
     }
 }
