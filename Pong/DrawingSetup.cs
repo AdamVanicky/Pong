@@ -44,16 +44,15 @@ namespace Pong
             Canvas.SetTop(recRacketAI, 180);
             Canvas.SetLeft(recRacketAI, 580);
         }
-        public int Score;
-        
+        public int Score = 0;
+        public bool Start = true;
         public double X=20, Y=-20;
         public double LastX, LastY;
 
         
-        public void GameTick(Panel panGame, Rectangle recBall, Rectangle recRacketPlayer, Rectangle recRacketAI, DispatcherTimer timer, Line linMid,TextBlock tbScore)
-        {
-            
-            
+        public void GameTick(Panel panGame, Rectangle recBall, Rectangle recRacketPlayer, Rectangle recRacketAI, DispatcherTimer timer, Line linMid,TextBlock tbScore, List<int> liTopScores)
+        { 
+            if(Start == true) { Score = 0; Start = false; }
             LastX = Canvas.GetLeft(recBall);
             LastY = Canvas.GetTop(recBall);
             
@@ -62,26 +61,30 @@ namespace Pong
                 Y *= -1;
                 
             }
-            //if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall)  >= Canvas.GetTop(recRacketPlayer) - 20 && Canvas.GetTop(recBall) <= Canvas.GetTop(recRacketPlayer) + 60) X *= -1;
-            
-            //if (Canvas.GetLeft(recBall) + 20 == Canvas.GetLeft(recRacketAI) && Canvas.GetTop(recBall) >= Canvas.GetTop(recRacketAI) - 20 && Canvas.GetTop(recBall) <= Canvas.GetTop(recRacketAI) + 60) X *= -1;
-           
+
             if (Canvas.GetLeft(recBall) == panGame.Width - 20) { LastX = 300; LastY = 200; tbScore.Text = Convert.ToString(++Score); }
 
-            if (Canvas.GetLeft(recBall) == 0) { LastX = 300 - X; LastY = 200 - Y; timer.Stop();  } //vrátit se sem při řešení tabulky leaderboard
+            if (Canvas.GetLeft(recBall) == 0) { LastX = 300 - X; LastY = 200 - Y; timer.Stop(); MessageBox.Show("Konec hry"); Start = true;
+                liTopScores[9] = Score;
+                liTopScores.Sort();
+                liTopScores.Reverse();
+            } //vrátit se sem při řešení tabulky leaderboard
 
             if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall)  == Canvas.GetTop(recRacketPlayer) - 20) 
             {
+                tbScore.Text = Convert.ToString(++Score);
                 Y = -20;
                 X = +20;
+
             }
-            else if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall) == Canvas.GetTop(recRacketPlayer)) { X *= -1; }
-            else if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall) == Canvas.GetTop(recRacketPlayer) + 20) { X = +20; Y = 0; }
-            else if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall) == Canvas.GetTop(recRacketPlayer) + 40) { X *= -1; }
+            else if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall) == Canvas.GetTop(recRacketPlayer)) { if (Y == 0) { Y = -20; }  X *= -1;  tbScore.Text = Convert.ToString(++Score); }
+            else if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall) == Canvas.GetTop(recRacketPlayer) + 20) { X = +20; Y = 0; tbScore.Text = Convert.ToString(++Score); }
+            else if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall) == Canvas.GetTop(recRacketPlayer) + 40) { if (Y == 0) { Y = 20; }  X *= -1; tbScore.Text = Convert.ToString(++Score); }
             else if (Canvas.GetLeft(recBall) - 20 == Canvas.GetLeft(recRacketPlayer) && Canvas.GetTop(recBall) == Canvas.GetTop(recRacketPlayer) + 60)
             {
                 Y = 20;
                 X = +20;
+                tbScore.Text = Convert.ToString(++Score);
             }
 
             if (Canvas.GetLeft(recBall) + 20 == Canvas.GetLeft(recRacketAI) && Canvas.GetTop(recBall)  == Canvas.GetTop(recRacketAI) - 20)
@@ -89,9 +92,9 @@ namespace Pong
                 Y = -20;
                 X = -20;
             }
-            else if (Canvas.GetLeft(recBall) + 20 == Canvas.GetLeft(recRacketAI) && Canvas.GetTop(recBall) == Canvas.GetTop(recRacketAI)) { X *= -1; }
+            else if (Canvas.GetLeft(recBall) + 20 == Canvas.GetLeft(recRacketAI) && Canvas.GetTop(recBall) == Canvas.GetTop(recRacketAI)) { if (Y == 0) { Y = -20; } X *= -1; }
             else if (Canvas.GetLeft(recBall) + 20 == Canvas.GetLeft(recRacketAI) && Canvas.GetTop(recBall)  == Canvas.GetTop(recRacketAI) + 20) { X = -20; Y = 0; }
-            else if (Canvas.GetLeft(recBall) + 20 == Canvas.GetLeft(recRacketAI) && Canvas.GetTop(recBall)  == Canvas.GetTop(recRacketAI) + 40) { X *= -1; }
+            else if (Canvas.GetLeft(recBall) + 20 == Canvas.GetLeft(recRacketAI) && Canvas.GetTop(recBall)  == Canvas.GetTop(recRacketAI) + 40) { if (Y == 0) { Y = 20; } X *= -1; }
             else if (Canvas.GetLeft(recBall) + 20 == Canvas.GetLeft(recRacketAI) && Canvas.GetTop(recBall)  == Canvas.GetTop(recRacketAI) + 60)
             {
                 Y = 20;
@@ -104,10 +107,10 @@ namespace Pong
 
             Canvas.SetTop(recBall, LastY + Y);
             Canvas.SetLeft(recBall, LastX + X);
-            
+
             Canvas.SetTop(recRacketAI, LastY);
 
-            
+
         }
     }
 }

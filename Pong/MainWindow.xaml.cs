@@ -20,7 +20,8 @@ namespace Pong
     public partial class MainWindow : Window
     {
         DispatcherTimer timer = new DispatcherTimer();
-        public List<string> TopScores = new List<string> {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
+        DispatcherTimer timerAI = new DispatcherTimer();
+        public List<int> TopScores = new List<int> (10);
         public MainWindow()
         {
             InitializeComponent();
@@ -28,17 +29,17 @@ namespace Pong
 
         private void butSetup_Click(object sender, RoutedEventArgs e)
         {
+            SetLeaderboard(TopScores.ToArray());
             timer.Stop();
+            timerAI.Stop();
             DrawingSetup ds = new DrawingSetup();
             ds.SetUp(linMid, recBall, recRacketPlayer, recRacketAI);
         }
-        public int Score;
         private void butStart_Click(object sender, RoutedEventArgs e)
         {
-            Score=0;
             tbScore.Text = "00";
             timer = new DispatcherTimer();
-            switch(cbDifficulty.Text)
+            switch (cbDifficulty.Text)
             {
                 case "Lehká":
                     timer.Interval = TimeSpan.FromMilliseconds(300);
@@ -48,11 +49,14 @@ namespace Pong
                     break;
                 case "Těžká":
                     timer.Interval = TimeSpan.FromMilliseconds(125);
+                    
                     break;
             }
             
             timer.Tick += timer_Tick;
             timer.Start();
+
+            
         }
 
         private void Hra_Pong___Vanický_KeyUp(object sender, KeyEventArgs e)
@@ -67,8 +71,11 @@ namespace Pong
         {
             
             SetLeaderboard(TopScores.ToArray());
-            gn.GameTick(panGame, recBall, recRacketPlayer, recRacketAI,timer,linMid,tbScore);
+            gn.GameTick(panGame, recBall, recRacketPlayer, recRacketAI, timer, linMid, tbScore,TopScores);
+
         }
+
+        
 
         private void Hra_Pong___Vanický_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -85,12 +92,23 @@ namespace Pong
             StreamReader sr = new StreamReader(fs);
             string s = sr.ReadToEnd();
             string[] Pole = s.Split('*');
-            SetLeaderboard(Pole);
+            int[] P = new int[Pole.Length];
+            for(int j = 0; j < Pole.Length; j++)
+            {
+                P[j] = Convert.ToInt32(Pole[j]);
+            }
+            for(int i = 0; i < P.Length; i++)
+            {
+                TopScores.Add(P[i]);
+            }
+            TopScores.Sort();
+            TopScores.Reverse();
+            SetLeaderboard(P);
             sr.Close();
             fs.Close();
         }
 
-        public void SetLeaderboard(string[] Pole)
+        public void SetLeaderboard(int[] Pole)
         {
             rtbLeaderboard.Document.Blocks.Clear();
             rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run("Žebříček nejlepších")));
