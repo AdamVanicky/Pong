@@ -88,24 +88,27 @@ namespace Pong
 
         private void Hra_Pong___Vanický_Loaded(object sender, RoutedEventArgs e)
         {
-            FileStream fs = new FileStream("Scores.txt", FileMode.OpenOrCreate);
-            StreamReader sr = new StreamReader(fs);
-            string s = sr.ReadToEnd();
-            string[] Pole = s.Split('*');
-            int[] P = new int[Pole.Length];
-            for(int j = 0; j < Pole.Length; j++)
+            if (File.Exists("Scores.txt"))
             {
-                P[j] = Convert.ToInt32(Pole[j]);
+                FileStream fs = new FileStream("Scores.txt", FileMode.OpenOrCreate);
+                StreamReader sr = new StreamReader(fs);
+                string s = sr.ReadToEnd();
+                string[] Pole = s.Split('*');
+                int[] P = new int[Pole.Length];
+                for (int j = 0; j < Pole.Length; j++)
+                {
+                    P[j] = Convert.ToInt32(Pole[j]);
+                }
+                for (int i = 0; i < P.Length; i++)
+                {
+                    TopScores.Add(P[i]);
+                }
+                TopScores.Sort();
+                TopScores.Reverse();
+                SetLeaderboard(P);
+                sr.Close();
+                fs.Close();
             }
-            for(int i = 0; i < P.Length; i++)
-            {
-                TopScores.Add(P[i]);
-            }
-            TopScores.Sort();
-            TopScores.Reverse();
-            SetLeaderboard(P);
-            sr.Close();
-            fs.Close();
         }
 
         public void SetLeaderboard(int[] Pole)
