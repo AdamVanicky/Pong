@@ -21,7 +21,7 @@ namespace Pong
     {
         DispatcherTimer timer = new DispatcherTimer();
         DispatcherTimer timerAI = new DispatcherTimer();
-        public List<int> TopScores = new List<int> (10);
+        public List<int> TopScores = new List<int> ();
         public MainWindow()
         {
             InitializeComponent();
@@ -108,6 +108,14 @@ namespace Pong
                 SetLeaderboard(P);
                 sr.Close();
                 fs.Close();
+            }
+            else
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    TopScores.Add(0);
+                }
+                SetLeaderboard(TopScores.ToArray());
             }
         }
 
