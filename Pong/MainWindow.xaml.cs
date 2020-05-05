@@ -88,7 +88,7 @@ namespace Pong
 
         private void Hra_Pong___Vanický_Loaded(object sender, RoutedEventArgs e)
         {
-            FileStream fs = new FileStream("Scores.txt", FileMode.Open);
+            FileStream fs = new FileStream("Scores.txt", FileMode.OpenOrCreate);
             StreamReader sr = new StreamReader(fs);
             string s = sr.ReadToEnd();
             string[] Pole = s.Split('*');
