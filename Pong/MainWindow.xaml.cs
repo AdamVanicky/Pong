@@ -20,7 +20,6 @@ namespace Pong
     public partial class MainWindow : Window
     {
         DispatcherTimer timer = new DispatcherTimer();
-        DispatcherTimer timerAI = new DispatcherTimer();
         public List<int> TopScores = new List<int> ();
         public MainWindow()
         {
@@ -31,7 +30,6 @@ namespace Pong
         {
             SetLeaderboard(TopScores.ToArray());
             timer.Stop();
-            timerAI.Stop();
             DrawingSetup ds = new DrawingSetup();
             ds.SetUp(linMid, recBall, recRacketPlayer, recRacketAI);
         }
@@ -59,7 +57,7 @@ namespace Pong
             
         }
 
-        private void Hra_Pong___Vanický_KeyUp(object sender, KeyEventArgs e)
+        private void GameKeyUp(object sender, KeyEventArgs e)
         {
             double d = Canvas.GetTop(recRacketPlayer);
             if (e.Key == Key.Up) { if(d > 0) { Canvas.SetTop(recRacketPlayer, d - 20); }  }
@@ -77,7 +75,7 @@ namespace Pong
 
         
 
-        private void Hra_Pong___Vanický_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void GameClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
             FileStream fs = new FileStream("Scores.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
@@ -86,37 +84,69 @@ namespace Pong
             fs.Close();
         }
 
-        private void Hra_Pong___Vanický_Loaded(object sender, RoutedEventArgs e)
+        private void GameLoad(object sender, RoutedEventArgs e)
         {
-            if (File.Exists("Scores.txt"))
+            #region MyIdea
+            //if (File.Exists("Scores.txt"))
+            //{
+            //    FileStream fs = new FileStream("Scores.txt", FileMode.OpenOrCreate);
+            //    StreamReader sr = new StreamReader(fs);
+            //    string s = sr.ReadToEnd();
+            //    string[] Pole = s.Split('*');
+            //    int[] P = new int[Pole.Length];
+            //    for (int j = 0; j < Pole.Length; j++)
+            //    {
+            //        P[j] = Convert.ToInt32(Pole[j]);
+            //    }
+            //    for (int i = 0; i < P.Length; i++)
+            //    {
+            //        TopScores.Add(P[i]);
+            //    }
+            //    TopScores.Sort();
+            //    TopScores.Reverse();
+            //    SetLeaderboard(P);
+            //    sr.Close();
+            //    fs.Close();
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < 10; i++)
+            //    {
+            //        TopScores.Add(0);
+            //    }
+            //    SetLeaderboard(TopScores.ToArray());
+            //}
+            #endregion
+
+            TopScores = FillLeaderBoard("Scores.txt");
+            SetLeaderboard(TopScores.ToArray());
+        }
+
+        private List<int> FillLeaderBoard(string fileName)
+        {
+            List<int> tempList = new List<int>();
+
+            if (File.Exists(fileName))
             {
-                FileStream fs = new FileStream("Scores.txt", FileMode.OpenOrCreate);
-                StreamReader sr = new StreamReader(fs);
-                string s = sr.ReadToEnd();
+                string s = File.ReadAllText(fileName);
                 string[] Pole = s.Split('*');
-                int[] P = new int[Pole.Length];
+                int hodnota;
                 for (int j = 0; j < Pole.Length; j++)
                 {
-                    P[j] = Convert.ToInt32(Pole[j]);
+                    hodnota = Convert.ToInt32(Pole[j]);
+                    tempList.Add(hodnota);
                 }
-                for (int i = 0; i < P.Length; i++)
-                {
-                    TopScores.Add(P[i]);
-                }
-                TopScores.Sort();
-                TopScores.Reverse();
-                SetLeaderboard(P);
-                sr.Close();
-                fs.Close();
+                tempList.Sort();
+                tempList.Reverse();
             }
             else
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    TopScores.Add(0);
+                    tempList.Add(0);
                 }
-                SetLeaderboard(TopScores.ToArray());
             }
+            return tempList;
         }
 
         public void SetLeaderboard(int[] Pole)
@@ -124,16 +154,22 @@ namespace Pong
             rtbLeaderboard.Document.Blocks.Clear();
             rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run("Žebříček nejlepších")));
             rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run("===============")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"1. {Pole[0]} b.")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"2. {Pole[1]} b.")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"3. {Pole[2]} b.")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"4. {Pole[3]} b.")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"5. {Pole[4]} b.")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"6. {Pole[5]} b.")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"7. {Pole[6]} b.")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"8. {Pole[7]} b.")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"9. {Pole[8]} b.")));
-            rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"10. {Pole[9]} b.")));
+            #region LongerVersion
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"1. {Pole[0]} b.")));
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"2. {Pole[1]} b.")));
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"3. {Pole[2]} b.")));
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"4. {Pole[3]} b.")));
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"5. {Pole[4]} b.")));
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"6. {Pole[5]} b.")));
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"7. {Pole[6]} b.")));
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"8. {Pole[7]} b.")));
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"9. {Pole[8]} b.")));
+            //rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"10. {Pole[9]} b.")));
+            #endregion
+            for (int i = 0; i < Pole.Length; i++)
+            {
+                rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"{i+1}. {Pole[i]} b.")));
+            }
         }
     }
 }
