@@ -69,5 +69,17 @@ namespace Pong
                 rtbLeaderboard.Document.Blocks.Add(new Paragraph(new Run($"{i + 1}. {Pole[i]} b.")));
             }
         }
+
+        public bool arraySorted(int[] Array)
+        {
+            for (int i = 0; i < Array.Length - 1; i++)
+            {
+                if (Array[i] < Array[i + 1])
+                {
+                    return false; // It is proven that the array is not sorted.
+                }
+            }
+            return true;
+        }
     }
 }
